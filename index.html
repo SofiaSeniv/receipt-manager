@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise en Place — Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header id="site-header">
+
+    </header>
+
+    <main>
+        <h1>Recipe <span>Vault</span></h1>
+
+        <search class="toolbar">
+            <input type="text" placeholder="Пошук рецептів..." id="search-input">
+            <div role="group" aria-label="Фільтр за категорією" class="filters">
+                <button class="filter-btn active" data-filter="all">Всі</button>
+                <button class="filter-btn" data-filter="main">Основне</button>
+                <button class="filter-btn" data-filter="soup">Суп</button>
+                <button class="filter-btn" data-filter="snack">Закуска</button>
+                <button class="filter-btn" data-filter="dessert">Десерт</button>
+            </div>
+        </search>
+
+        <section class="recipe-grid" id="recipe-grid">
+            <!-- картки рендеряться через JS -->
+        </section>
+    </main>
+
+    <script src="js/header.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
