@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise en Place — Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+    <header id="site-header">
+
+    </header>
+
+    <main>
+        <section class="detail-hero">
+            <div class="detail-hero-img" id="detail-hero-img">
+                <!-- фото -->
+            </div>
+            <div class="detail-hero-info">
+                <p class="detail-course" id="detail-category"></p>
+                <h1 class="detail-title" id="detail-title"></h1>
+
+                <dl class="detail-stats">
+                    <div class="stat">
+                        <dt class="stat-label">Час</dt>
+                        <dd class="stat-value" id="stat-time"></dd>
+                    </div>
+                    <div class="stat">
+                        <dt class="stat-label">Порції</dt>
+                        <dd class="stat-value" id="stat-servings"></dd>
+                    </div>
+                </dl>
+
+                <div class="scaler" role="group" aria-label="Кількість порцій">
+                    <span>Порції</span>
+                    <button id="btn-minus" aria-label="Зменшити кількість порцій">−</button>
+                    <span id="servings-num" aria-live="polite"></span>
+                    <button id="btn-plus" aria-label="Збільшити кількість порцій">+</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="detail-body">
+            <div class="ingredients-section">
+                <h2>Інгредієнти</h2>
+                <ul id="ingredients-list"></ul>
+            </div>
+            <div class="steps-section">
+                <h2>Приготування</h2>
+                <ol id="steps-list"></ol>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/header.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/details.js"></script>
+</body>
+
+</html>
