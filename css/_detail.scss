@@ -29,12 +29,10 @@
     }
 }
 
-/* Категорія */
 .detail-course {
     @include label-uppercase(10px, $warm);
 }
 
-/* Назва рецепту */
 .detail-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 40px;
@@ -43,7 +41,6 @@
     color: $ink;
 }
 
-/* ===== СТАТИСТИКА ===== */
 .detail-stats {
     display: flex;
     gap: 1px;
@@ -72,7 +69,6 @@
     }
 }
 
-/* ===== SCALER ===== */
 .scaler {
     display: flex;
     align-items: center;
@@ -86,8 +82,7 @@
     }
 }
 
-#btn-minus,
-#btn-plus {
+.btn-scaler {
     width: 32px;
     height: 32px;
     background: transparent;
@@ -101,14 +96,13 @@
     transition: background 0.15s;
     font-family: 'Jost', sans-serif;
     line-height: 1;
+
+    &:hover {
+        background: $warm-light;
+    }
 }
 
-#btn-minus:hover,
-#btn-plus:hover {
-    background: $cream;
-}
-
-#servings-num {
+.servings-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     min-width: 24px;
@@ -116,7 +110,6 @@
     color: $ink;
 }
 
-/* ===== DETAIL BODY ===== */
 .detail-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -150,8 +143,7 @@
     border-right: 0.5px solid $border;
 }
 
-/* ===== ІНГРЕДІЄНТИ ===== */
-#ingredients-list {
+.ingredients-list {
     list-style: none;
 }
 
@@ -181,8 +173,7 @@
     white-space: nowrap;
 }
 
-/* ===== КРОКИ ===== */
-#steps-list {
+.steps-list {
     list-style: none;
     counter-reset: step-counter;
 }
@@ -204,7 +195,7 @@
         font-family: 'Cormorant Garamond', serif;
         font-size: 28px;
         font-weight: 300;
-        color: $cream;
+        color: $warm-light;
         line-height: 1;
     }
 }

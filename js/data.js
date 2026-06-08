@@ -1,170 +1,124 @@
+const createRecipe = (id, title, photoPath, category_name, category_display_name, cookTime, servings, versionsCount, techniques, ingredients, steps) => ({
+  id,
+  title,
+  photoPath,
+  category_name,
+  category_display_name,
+  cookTime,
+  servings,
+  versionsCount,
+  techniques,
+  ingredients,
+  steps
+});
+
+const createIngredient = (name, amount, unit) => ({ name, amount, unit });
+
+const createStep = (num, technique, text, time) => ({ num, technique, text, time });
+
 const recipes = [
-  {
-    id: 1,
-    title: "Canard à l'Orange",
-    photoPath: "photos/сanard_a_lOrange.jpeg",
-    category_name: "main",
-    category_display_name: "Основна страва",
-    cookTime: "2 год",
-    servings: 4,
-    versionsCount: 3,
-    techniques: ["Searing", "Sauce bigarade"],
-    ingredients: [
-      { name: "Качка ціла", amount: 1.8, unit: "кг" },
-      { name: "Апельсини", amount: 3, unit: "шт" },
-      { name: "Фонд телячий", amount: 300, unit: "мл" },
-      { name: "Цукор", amount: 60, unit: "г" },
+  createRecipe(1, "Canard à l'Orange", "photos/сanard_a_lOrange.jpeg", "main", "Основна страва", "2 год", 4, 3,
+    ["Searing", "Sauce bigarade"],
+    [
+      createIngredient("Качка ціла", 1.8, "кг"),
+      createIngredient("Апельсини", 3, "шт"),
+      createIngredient("Фонд телячий", 300, "мл"),
+      createIngredient("Цукор", 60, "г"),
     ],
-    steps: [
-      { num: "01", technique: "Brunoise", text: "Очистіть качку...", time: "15 хв" },
-      { num: "02", technique: "Searing", text: "Обсмажте качку...", time: "20 хв" },
+    [
+      createStep("01", "Brunoise", "Очистіть качку...", "15 хв"),
+      createStep("02", "Searing", "Обсмажте качку...", "20 хв"),
     ]
-  },
-  {
-    id: 2,
-    title: "Boeuf Bourguignon",
-    photoPath: "photos/boeuf_bourguignon.jpg",
-    category_name: "main",
-    category_display_name: "Основна страва",
-    cookTime: "3.5 год",
-    servings: 6,
-    versionsCount: 5,
-    techniques: ["Braising", "Deglazing"],
-    ingredients: [
-      { name: "Яловичина (лопатка)", amount: 1.2, unit: "кг" },
-      { name: "Червоне сухе вино", amount: 750, unit: "мл" },
-      { name: "Печериці", amount: 300, unit: "г" },
-      { name: "Бекон", amount: 150, unit: "г" },
+  ),
+  createRecipe(2, "Boeuf Bourguignon", "photos/boeuf_bourguignon.jpg", "main", "Основна страва", "3.5 год", 6, 5,
+    ["Braising", "Deglazing"],
+    [
+      createIngredient("Яловичина (лопатка)", 1.2, "кг"),
+      createIngredient("Червоне сухе вино", 750, "мл"),
+      createIngredient("Печериці", 300, "г"),
+      createIngredient("Бекон", 150, "г"),
     ],
-    steps: [
-      { num: "01", technique: "Mise en place", text: "Наріжте м'ясо кубиками та обсушіть...", time: "20 хв" },
-      { num: "02", technique: "Searing", text: "Обсмажте м'ясо до рум'яної скоринки...", time: "15 хв" },
+    [
+      createStep("01", "Mise en place", "Наріжте м'ясо кубиками та обсушіть...", "20 хв"),
+      createStep("02", "Searing", "Обсмажте м'ясо до рум'яної скоринки...", "15 хв"),
     ]
-  },
-  {
-    id: 3,
-    title: "Risotto ai Funghi",
-    photoPath: "photos/risotto_ai_funghi.jpg",
-    category_name: "main",
-    category_display_name: "Основна страва",
-    cookTime: "40 хв",
-    servings: 2,
-    versionsCount: 2,
-    techniques: ["Toasting", "Emulsifying"],
-    ingredients: [
-      { name: "Рис Арборіо", amount: 200, unit: "г" },
-      { name: "Білі гриби", amount: 250, unit: "г" },
-      { name: "Пармезан", amount: 50, unit: "г" },
-      { name: "Вершкове масло", amount: 40, unit: "г" },
+  ),
+  createRecipe(3, "Risotto ai Funghi", "photos/risotto_ai_funghi.jpg", "main", "Основна страва", "40 хв", 2, 2,
+    ["Toasting", "Emulsifying"],
+    [
+      createIngredient("Рис Арборіо", 200, "г"),
+      createIngredient("Білі гриби", 250, "г"),
+      createIngredient("Пармезан", 50, "г"),
+      createIngredient("Вершкове масло", 40, "г"),
     ],
-    steps: [
-      { num: "01", technique: "Sauter", text: "Обсмажте гриби з часником...", time: "10 хв" },
-      { num: "02", technique: "Mantecatura", text: "Інтенсивно вмішайте холодне масло та сир...", time: "5 хв" },
+    [
+      createStep("01", "Sauter", "Обсмажте гриби з часником...", "10 хв"),
+      createStep("02", "Mantecatura", "Інтенсивно вмішайте холодне масло та сир...", "5 хв"),
     ]
-  },
-  {
-    id: 4,
-    title: "Crème Brûlée",
-    photoPath: "photos/creme_brulee.jpg",
-    category_name: "dessert",
-    category_display_name: "Десерт",
-    cookTime: "1 год + охолодження",
-    servings: 4,
-    versionsCount: 4,
-    techniques: ["Bain-marie", "Caramelization"],
-    ingredients: [
-      { name: "Вершки 33%", amount: 500, unit: "мл" },
-      { name: "Жовтки", amount: 6, unit: "шт" },
-      { name: "Цукор тростинний", amount: 80, unit: "г" },
-      { name: "Ваніль", amount: 1, unit: "стручок" },
+  ),
+  createRecipe(4, "Crème Brûlée", "photos/creme_brulee.jpg", "dessert", "Десерт", "1 год + охолодження", 4, 4,
+    ["Bain-marie", "Caramelization"],
+    [
+      createIngredient("Вершки 33%", 500, "мл"),
+      createIngredient("Жовтки", 6, "шт"),
+      createIngredient("Цукор тростинний", 80, "г"),
+      createIngredient("Ваніль", 1, "стручок"),
     ],
-    steps: [
-      { num: "01", technique: "Infusion", text: "Нагрійте вершки з ваніллю...", time: "10 хв" },
-      { num: "02", technique: "Baking", text: "Випікайте на водяній бані при 100°C...", time: "45 хв" },
+    [
+      createStep("01", "Infusion", "Нагрійте вершки з ваніллю...", "10 хв"),
+      createStep("02", "Baking", "Випікайте на водяній бані при 100°C...", "45 хв"),
     ]
-  },
-  {
-    id: 5,
-    title: "Salade Niçoise",
-    photoPath: "photos/salade_nicoise.jpg",
-    category_name: "snack",
-    category_display_name: "Закуска",
-    cookTime: "30 хв",
-    servings: 2,
-    versionsCount: 3,
-    techniques: ["Blanching", "Emulsion"],
-    ingredients: [
-      { name: "Тунець свіжий", amount: 200, unit: "г" },
-      { name: "Стручкова квасоля", amount: 100, unit: "г" },
-      { name: "Яйця перепелині", amount: 4, unit: "шт" },
-      { name: "Анчоуси", amount: 4, unit: "філе" },
+  ),
+  createRecipe(5, "Salade Niçoise", "photos/salade_nicoise.jpg", "snack", "Закуска", "30 хв", 2, 3,
+    ["Blanching", "Emulsion"],
+    [
+      createIngredient("Тунець свіжий", 200, "г"),
+      createIngredient("Стручкова квасоля", 100, "г"),
+      createIngredient("Яйця перепелині", 4, "шт"),
+      createIngredient("Анчоуси", 4, "філе"),
     ],
-    steps: [
-      { num: "01", technique: "Blanching", text: "Ошпарте квасолю та охолодіть у льоду...", time: "5 хв" },
-      { num: "02", technique: "Grilling", text: "Швидко обсмажте тунець (Medium Rare)...", time: "4 хв" },
+    [
+      createStep("01", "Blanching", "Ошпарте квасолю та охолодіть у льоду...", "5 хв"),
+      createStep("02", "Grilling", "Швидко обсмажте тунець (Medium Rare)...", "4 хв"),
     ]
-  },
-  {
-    id: 6,
-    title: "Soupe à l'Oignon",
-    photoPath: "photos/soupe_a_lOignon.jpg",
-    category_name: "soup",
-    category_display_name: "Суп",
-    cookTime: "1.5 год",
-    servings: 4,
-    versionsCount: 2,
-    techniques: ["Caramelization", "Gratiner"],
-    ingredients: [
-      { name: "Цибуля жовта", amount: 1, unit: "кг" },
-      { name: "Яловичий бульйон", amount: 1.2, unit: "л" },
-      { name: "Багет", amount: 0.5, unit: "шт" },
-      { name: "Сир Грюєр", amount: 100, unit: "г" },
+  ),
+  createRecipe(6, "Soupe à l'Oignon", "photos/soupe_a_lOignon.jpg", "soup", "Суп", "1.5 год", 4, 2,
+    ["Caramelization", "Gratiner"],
+    [
+      createIngredient("Цибуля жовта", 1, "кг"),
+      createIngredient("Яловичий бульйон", 1.2, "л"),
+      createIngredient("Багет", 0.5, "шт"),
+      createIngredient("Сир Грюєр", 100, "г"),
     ],
-    steps: [
-      { num: "01", technique: "Slow Cooking", text: "Томіть цибулю до глибокого золотистого кольору...", time: "50 хв" },
-      { num: "02", technique: "Gratiner", text: "Запечіть суп з грінкою та сиром до скоринки...", time: "10 хв" },
+    [
+      createStep("01", "Slow Cooking", "Томіть цибулю до глибокого золотистого кольору...", "50 хв"),
+      createStep("02", "Gratiner", "Запечіть суп з грінкою та сиром до скоринки...", "10 хв"),
     ]
-  },
-  {
-    id: 7,
-    title: "Ratatouille",
-    photoPath: "photos/ratatouille.jpeg",
-    category_name: "main",
-    category_display_name: "Гарнір / Основна",
-    cookTime: "1.2 год",
-    servings: 4,
-    versionsCount: 3,
-    techniques: ["Confit", "Mandoline slicing"],
-    ingredients: [
-      { name: "Баклажан", amount: 2, unit: "шт" },
-      { name: "Цукіні", amount: 2, unit: "шт" },
-      { name: "Томати", amount: 5, unit: "шт" },
-      { name: "Перець болгарський", amount: 2, unit: "шт" },
+  ),
+  createRecipe(7, "Ratatouille", "photos/ratatouille.jpeg", "main", "Гарнір / Основна", "1.2 год", 4, 3,
+    ["Confit", "Mandoline slicing"],
+    [
+      createIngredient("Баклажан", 2, "шт"),
+      createIngredient("Цукіні", 2, "шт"),
+      createIngredient("Томати", 5, "шт"),
+      createIngredient("Перець болгарський", 2, "шт"),
     ],
-    steps: [
-      { num: "01", technique: "Slicing", text: "Наріжте овочі тонкими слайсами...", time: "20 хв" },
-      { num: "02", technique: "Stewing", text: "Викладіть шарами на соус піперад та запікайте...", time: "50 хв" },
+    [
+      createStep("01", "Slicing", "Наріжте овочі тонкими слайсами...", "20 хв"),
+      createStep("02", "Stewing", "Викладіть шарами на соус піперад та запікайте...", "50 хв"),
     ]
-  },
-  {
-    id: 8,
-    title: "Coq au Vin",
-    photoPath: "photos/coq_au_vin.jpg",
-    category_name: "main",
-    category_display_name: "Основна страва",
-    cookTime: "2.5 год",
-    servings: 4,
-    versionsCount: 2,
-    techniques: ["Marinating", "Flambé"],
-    ingredients: [
-      { name: "Курка (стегна)", amount: 1.5, unit: "кг" },
-      { name: "Вино червоне", amount: 500, unit: "мл" },
-      { name: "Коньяк", amount: 50, unit: "мл" },
-      { name: "Перлова цибуля", amount: 200, unit: "г" },
+  ),
+  createRecipe(8, "Coq au Vin", "photos/coq_au_vin.jpg", "main", "Основна страва", "2.5 год", 4, 2,
+    ["Marinating", "Flambé"],
+    [
+      createIngredient("Курка (стегна)", 1.5, "кг"),
+      createIngredient("Вино червоне", 500, "мл"),
+      createIngredient("Коньяк", 50, "мл"),
+      createIngredient("Перлова цибуля", 200, "г"),
     ],
-    steps: [
-      { num: "01", technique: "Flambé", text: "Підпаліть коньяк для видалення алкоголю...", time: "2 хв" },
-      { num: "02", technique: "Braising", text: "Тушкуйте птицю у вині з овочами...", time: "90 хв" },
+    [
+      createStep("01", "Flambé", "Підпаліть коньяк для видалення алкоголю...", "2 хв"),
+      createStep("02", "Braising", "Тушкуйте птицю у вині з овочами...", "90 хв"),
     ]
-  }
+  ),
 ];
