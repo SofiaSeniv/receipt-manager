@@ -1,5 +1,7 @@
-function renderHeader() {
+function renderHeader(): void {
   const header = document.getElementById('site-header');
+  if (!header) return;
+
   header.innerHTML = `
     <a href="index.html" class="logo">Mise <span>en Place</span> </a>
     <nav>

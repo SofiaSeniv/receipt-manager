@@ -1,4 +1,6 @@
-function renderCard(recipe) {
+import { recipes, CategoryName, Recipe } from "./data";
+
+function renderCard(recipe: Recipe): string {
   return `
     <article class="recipe-card">
         <a href="details.html?id=${recipe.id}">
@@ -20,29 +22,33 @@ function renderCard(recipe) {
   `;
 }
 
-function renderRecipes(recipes) {
-    const recipeGrid = document.getElementById('recipe-grid');
-    recipeGrid.innerHTML = recipes.map(r => renderCard(r)).join("")
+function renderRecipes(recipes: Recipe[]): void {
+  const recipeGrid = document.getElementById('recipe-grid');
+  if (!recipeGrid) return;
+  recipeGrid.innerHTML = recipes.map(r => renderCard(r)).join("")
 }
 
-function getFilteredRecipes() {
-  const query = document.getElementById('search-input').value.toLowerCase();
-  const activeBtn = document.querySelector('.filter-btn.active');
-  const activeFilter = activeBtn.dataset.filter;
+function getFilteredRecipes(): Recipe[] {
+  const searchInput = document.getElementById("search-input") as HTMLInputElement | null;
+  const query = searchInput?.value.toLowerCase() ?? "";
+
+  const activeBtn = document.querySelector('.filter-btn.active') as HTMLElement | null;
+  const activeFilter = activeBtn?.dataset.filter ?? "all";
 
   return recipes.filter(r => {
-    const matchesCategory = activeFilter === 'all' || r.category_name === activeFilter;
+    const matchesCategory = activeFilter === 'all' || r.category_name === (activeFilter as CategoryName);
     const matchesQuery = r.title.toLowerCase().includes(query);
     return matchesCategory && matchesQuery;
   });
 }
 
 
-document.getElementById('search-input').addEventListener('input', () => {
+const searchInput = document.getElementById("search-input") as HTMLInputElement | null;
+searchInput?.addEventListener("input", () => {
   renderRecipes(getFilteredRecipes());
 });
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');

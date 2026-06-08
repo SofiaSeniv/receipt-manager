@@ -1,4 +1,58 @@
-const createRecipe = (id, title, photoPath, category_name, category_display_name, cookTime, servings, versionsCount, techniques, ingredients, steps) => ({
+export type CategoryName = 'main' | 'soup' | 'snack' | 'dessert';
+
+export interface Ingredient {
+  name: string;
+  amount: number;
+  unit: string;
+}
+
+export interface Step {
+  num: string;
+  technique: string;
+  text: string;
+  time: string;
+}
+
+export interface Recipe {
+  id: number;
+  title: string;
+  photoPath: string;
+  category_name: CategoryName;
+  category_display_name: string;
+  cookTime: string;
+  servings: number;
+  versionsCount: number;
+  techniques: string[];
+  ingredients: Ingredient[];
+  steps: Step[];
+}
+
+const createIngredient = (name: string, amount: number, unit: string): Ingredient => ({
+  name,
+  amount,
+  unit,
+});
+
+const createStep = (num: string, technique: string, text: string, time: string): Step => ({
+  num,
+  technique,
+  text,
+  time,
+});
+
+const createRecipe = (
+  id: number,
+  title: string,
+  photoPath: string,
+  category_name: CategoryName,
+  category_display_name: string,
+  cookTime: string,
+  servings: number,
+  versionsCount: number,
+  techniques: string[],
+  ingredients: Ingredient[],
+  steps: Step[]
+): Recipe => ({
   id,
   title,
   photoPath,
@@ -9,14 +63,10 @@ const createRecipe = (id, title, photoPath, category_name, category_display_name
   versionsCount,
   techniques,
   ingredients,
-  steps
+  steps,
 });
 
-const createIngredient = (name, amount, unit) => ({ name, amount, unit });
-
-const createStep = (num, technique, text, time) => ({ num, technique, text, time });
-
-const recipes = [
+export const recipes: Recipe[] = [
   createRecipe(1, "Canard à l'Orange", "photos/сanard_a_lOrange.jpeg", "main", "Основна страва", "2 год", 4, 3,
     ["Searing", "Sauce bigarade"],
     [
