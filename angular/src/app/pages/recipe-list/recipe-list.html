@@ -1,0 +1,22 @@
+<h1>Recipe <span>Vault</span></h1>
+
+<search class="toolbar">
+    <input type="text" placeholder="Пошук рецептів..." class="search-input" [value]="query()"
+        (input)="onSearch($event)">
+
+    <div role="group" aria-label="Фільтр за категорією" class="filters">
+        @for (f of filters; track f.key) {
+        <button class="filter-btn" [class.active]="activeFilter() === f.key" (click)="activeFilter.set(f.key)">
+            {{ f.label }}
+        </button>
+        }
+    </div>
+</search>
+
+<section class="recipe-grid">
+    @for (recipe of filteredRecipes(); track recipe.id) {
+    <app-recipe-card [recipe]="recipe" />
+    } @empty {
+    <p>Нічого не знайдено.</p>
+    }
+</section>

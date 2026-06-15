@@ -1,0 +1,19 @@
+<article class="recipe-card">
+    <a [routerLink]="['/recipe', recipe().id]">
+        <img [src]="recipe().photoPath" [alt]="recipe().title">
+        <div class="card-content">
+            <p>{{ recipe().categoryDisplayName }}</p>
+            <h2>{{ recipe().title }}</h2>
+            <dl>
+                <dt>Час</dt>
+                <dd>{{ recipe().cookTime }}</dd>
+                <dt>Порції</dt>
+                <dd>{{ recipe().servings }}</dd>
+            </dl>
+            @for (t of recipe().techniques; track t) {
+            <span class="tag">{{ t }}</span>
+            }
+            <p>{{ recipe().versionsCount }} версії</p>
+        </div>
+    </a>
+</article>

@@ -1,0 +1,55 @@
+@if (recipe(); as recipe) {
+<section class="detail-hero">
+    <div class="detail-hero-img">
+        <img [src]="recipe.photoPath" [alt]="recipe.title">
+    </div>
+    <div class="detail-hero-info">
+        <p class="detail-course">{{ recipe.categoryDisplayName }}</p>
+        <h1 class="detail-title">{{ recipe.title }}</h1>
+
+        <dl class="detail-stats">
+            <div class="stat">
+                <dt class="stat-label">Час</dt>
+                <dd class="stat-value">{{ recipe.cookTime }}</dd>
+            </div>
+            <div class="stat">
+                <dt class="stat-label">Порції</dt>
+                <dd class="stat-value">{{ currentServings() }}</dd>
+            </div>
+        </dl>
+
+        <div class="scaler" role="group" aria-label="Кількість порцій">
+            <span>Порції</span>
+            <button class="btn-scaler" (click)="decrement()" aria-label="Зменшити кількість порцій">−</button>
+            <span class="servings-num" aria-live="polite">{{ currentServings() }}</span>
+            <button class="btn-scaler" (click)="increment()" aria-label="Збільшити кількість порцій">+</button>
+        </div>
+    </div>
+</section>
+
+<section class="detail-body">
+    <div class="ingredients-section">
+        <h2>Інгредієнти</h2>
+        <ul class="ingredients-list">
+            @for (ing of scaledIngredients(); track ing.name) {
+            <li class="ingredient-item">
+                <span class="ingredient-name">{{ ing.name }}</span>
+                <span class="ingredient-amount">{{ ing.amount }} {{ ing.unit }}</span>
+            </li>
+            }
+        </ul>
+    </div>
+    <div class="steps-section">
+        <h2>Приготування</h2>
+        <ol class="steps-list">
+            @for (step of recipe.steps; track step.num) {
+            <li class="step-item">
+                <p class="step-technique">{{ step.technique }}</p>
+                <p class="step-text">{{ step.text }}</p>
+                <p class="step-time">{{ step.time }}</p>
+            </li>
+            }
+        </ol>
+    </div>
+</section>
+}
