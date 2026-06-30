@@ -1,3 +1,6 @@
+@if (loading()) {
+<p class="detail-loading">Завантаження...</p>
+}
 @if (recipe(); as recipe) {
 <section class="detail-hero">
     <div class="detail-hero-img">

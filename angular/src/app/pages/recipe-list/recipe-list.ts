@@ -1,7 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { RecipeService } from '../../services/recipe';
 import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
-import { CategoryName } from '../../models/recipe.model';
+import { CategoryName, Recipe } from '../../models/recipe.model';
 
 interface Filter {
   key: CategoryName | 'all';
@@ -28,12 +31,20 @@ export class RecipeListComponent {
   readonly query = signal('');
   readonly activeFilter = signal<CategoryName | 'all'>('all');
 
-  private readonly allRecipes = this.recipeService.getAll();
+  private readonly allRecipes = toSignal(this.recipeService.getAll(), {
+    initialValue: [] as Recipe[],
+  });
+
+  private readonly search$ = new Subject<string>();
+  private readonly debouncedQuery = toSignal(
+    this.search$.pipe(debounceTime(250), distinctUntilChanged()),
+    { initialValue: '' }
+  );
 
   readonly filteredRecipes = computed(() => {
-    const q = this.query().toLowerCase();
+    const q = this.debouncedQuery().toLowerCase();
     const filter = this.activeFilter();
-    return this.allRecipes.filter(r => {
+    return this.allRecipes().filter(r => {
       const matchesCategory = filter === 'all' || r.categoryName === filter;
       const matchesQuery = r.title.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
@@ -41,6 +52,8 @@ export class RecipeListComponent {
   });
 
   onSearch(event: Event): void {
-    this.query.set((event.target as HTMLInputElement).value);
+    const value = (event.target as HTMLInputElement).value;
+    this.query.set(value);
+    this.search$.next(value);
   }
 }

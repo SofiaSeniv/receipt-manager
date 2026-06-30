@@ -1,6 +1,14 @@
 import { Component, computed, effect, inject, input, linkedSignal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
+import { Recipe } from '../../models/recipe.model';
 import { RecipeService } from '../../services/recipe';
+
+interface RecipeLoadState {
+  loading: boolean;
+  recipe: Recipe | undefined;
+}
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,7 +21,19 @@ export class RecipeDetailComponent {
 
   readonly id = input.required<string>();
 
-  readonly recipe = computed(() => this.recipeService.getById(Number(this.id())));
+  private readonly id$ = toObservable(this.id);
+
+  private readonly loadState = toSignal(
+    this.id$.pipe(
+      switchMap(id =>
+        this.recipeService.getById(Number(id)).pipe(map(recipe => ({ loading: false, recipe })))
+      )
+    ),
+    { initialValue: { loading: true, recipe: undefined } as RecipeLoadState }
+  );
+
+  readonly recipe = computed(() => this.loadState().recipe);
+  readonly loading = computed(() => this.loadState().loading);
 
   readonly currentServings = linkedSignal(() => this.recipe()?.servings ?? 0);
 
@@ -29,7 +49,8 @@ export class RecipeDetailComponent {
 
   constructor() {
     effect(() => {
-      if (!this.recipe()) {
+      const state = this.loadState();
+      if (!state.loading && !state.recipe) {
         this.router.navigate(['/']);
       }
     });

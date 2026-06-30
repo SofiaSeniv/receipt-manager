@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { Recipe } from '../models/recipe.model';
 import { RECIPES } from '../data/recipes.data';
 
@@ -8,11 +10,11 @@ import { RECIPES } from '../data/recipes.data';
 export class RecipeService {
   private readonly recipes = RECIPES;
 
-  getAll(): Recipe[] {
-    return this.recipes;
+  getAll(): Observable<Recipe[]> {
+    return of(this.recipes).pipe(delay(200));
   }
 
-  getById(id: number): Recipe | undefined {
-    return this.recipes.find(r => r.id === id);
+  getById(id: number): Observable<Recipe | undefined> {
+    return of(this.recipes.find(r => r.id === id)).pipe(delay(200));
   }
 }
