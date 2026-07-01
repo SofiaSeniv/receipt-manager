@@ -1,6 +1,9 @@
 @if (loading()) {
 <p class="detail-loading">Завантаження...</p>
 }
+@if (!loading() && !recipe()) {
+<app-not-found />
+}
 @if (recipe(); as recipe) {
 <section class="detail-hero">
     <div class="detail-hero-img">

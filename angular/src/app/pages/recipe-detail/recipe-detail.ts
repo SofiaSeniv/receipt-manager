@@ -1,9 +1,9 @@
-import { Component, computed, effect, inject, input, linkedSignal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeService } from '../../services/recipe';
+import { NotFoundComponent } from '../not-found/not-found';
 
 interface RecipeLoadState {
   loading: boolean;
@@ -12,12 +12,12 @@ interface RecipeLoadState {
 
 @Component({
   selector: 'app-recipe-detail',
+  imports: [NotFoundComponent],
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.scss',
 })
 export class RecipeDetailComponent {
   private readonly recipeService = inject(RecipeService);
-  private readonly router = inject(Router);
 
   public readonly id = input.required<string>();
 
@@ -46,15 +46,6 @@ export class RecipeDetailComponent {
       amount: Math.round(ing.amount * ratio * 10) / 10,
     }));
   });
-
-  public constructor() {
-    effect(() => {
-      const state = this.loadState();
-      if (!state.loading && !state.recipe) {
-        this.router.navigate(['/']);
-      }
-    });
-  }
 
   public decrement(): void {
     if (this.currentServings() > 1) {
