@@ -20,7 +20,7 @@ interface Filter {
 export class RecipeListComponent {
   private readonly recipeService = inject(RecipeService);
 
-  readonly filters: Filter[] = [
+  public readonly filters: Filter[] = [
     { key: 'all', label: 'Всі' },
     { key: 'main', label: 'Основне' },
     { key: 'soup', label: 'Суп' },
@@ -28,8 +28,8 @@ export class RecipeListComponent {
     { key: 'dessert', label: 'Десерт' },
   ];
 
-  readonly query = signal('');
-  readonly activeFilter = signal<CategoryName | 'all'>('all');
+  public readonly query = signal('');
+  public readonly activeFilter = signal<CategoryName | 'all'>('all');
 
   private readonly allRecipes = toSignal(this.recipeService.getAll(), {
     initialValue: [] as Recipe[],
@@ -41,7 +41,7 @@ export class RecipeListComponent {
     { initialValue: '' }
   );
 
-  readonly filteredRecipes = computed(() => {
+  public readonly filteredRecipes = computed(() => {
     const q = this.debouncedQuery().toLowerCase();
     const filter = this.activeFilter();
     return this.allRecipes().filter(r => {
@@ -51,7 +51,7 @@ export class RecipeListComponent {
     });
   });
 
-  onSearch(event: Event): void {
+  public onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.query.set(value);
     this.search$.next(value);

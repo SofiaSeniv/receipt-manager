@@ -10,11 +10,11 @@ import { RECIPES } from '../data/recipes.data';
 export class RecipeService {
   private readonly recipes = RECIPES;
 
-  getAll(): Observable<Recipe[]> {
+  public getAll(): Observable<Recipe[]> {
     return of(this.recipes).pipe(delay(200));
   }
 
-  getById(id: number): Observable<Recipe | undefined> {
+  public getById(id: number): Observable<Recipe | undefined> {
     return of(this.recipes.find(r => r.id === id)).pipe(delay(200));
   }
 }

@@ -9,5 +9,5 @@ import { Recipe } from '../../models/recipe.model';
   styleUrl: './recipe-card.scss',
 })
 export class RecipeCardComponent {
-  readonly recipe = input.required<Recipe>();
+  public readonly recipe = input.required<Recipe>();
 }

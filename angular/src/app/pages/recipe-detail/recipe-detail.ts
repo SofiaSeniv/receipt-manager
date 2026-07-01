@@ -19,7 +19,7 @@ export class RecipeDetailComponent {
   private readonly recipeService = inject(RecipeService);
   private readonly router = inject(Router);
 
-  readonly id = input.required<string>();
+  public readonly id = input.required<string>();
 
   private readonly id$ = toObservable(this.id);
 
@@ -32,12 +32,12 @@ export class RecipeDetailComponent {
     { initialValue: { loading: true, recipe: undefined } as RecipeLoadState }
   );
 
-  readonly recipe = computed(() => this.loadState().recipe);
-  readonly loading = computed(() => this.loadState().loading);
+  public readonly recipe = computed(() => this.loadState().recipe);
+  public readonly loading = computed(() => this.loadState().loading);
 
-  readonly currentServings = linkedSignal(() => this.recipe()?.servings ?? 0);
+  public readonly currentServings = linkedSignal(() => this.recipe()?.servings ?? 0);
 
-  readonly scaledIngredients = computed(() => {
+  public readonly scaledIngredients = computed(() => {
     const r = this.recipe();
     if (!r) return [];
     const ratio = this.currentServings() / r.servings;
@@ -47,7 +47,7 @@ export class RecipeDetailComponent {
     }));
   });
 
-  constructor() {
+  public constructor() {
     effect(() => {
       const state = this.loadState();
       if (!state.loading && !state.recipe) {
@@ -56,13 +56,13 @@ export class RecipeDetailComponent {
     });
   }
 
-  decrement(): void {
+  public decrement(): void {
     if (this.currentServings() > 1) {
       this.currentServings.update(v => v - 1);
     }
   }
 
-  increment(): void {
+  public increment(): void {
     if (this.currentServings() < 20) {
       this.currentServings.update(v => v + 1);
     }
