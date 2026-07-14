@@ -155,6 +155,7 @@ export const RecipeStore = signalStore(
               patchState(store, {
                 recipes: store.recipes().map((r) => (r.id === updated.id ? updated : r)),
                 updating: false,
+                ...(store.selectedId() === updated.id ? { currentServings: updated.servings } : {}),
               })
             ),
             catchError(() => {

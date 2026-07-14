@@ -177,6 +177,25 @@ describe('RecipeStore', () => {
       store.update({ ...RECIPES[0], id: 9999 });
       expect(store.updateError()).toBeTruthy();
     });
+
+    it('refreshes currentServings when the updated recipe is currently selected', () => {
+      const target = RECIPES[0];
+      store.loadById(target.id);
+      expect(store.currentServings()).toBe(target.servings);
+
+      store.update({ ...target, servings: target.servings + 3 });
+      expect(store.currentServings()).toBe(target.servings + 3);
+    });
+
+    it('does not touch currentServings when a different recipe is updated', () => {
+      const selected = RECIPES[0];
+      const other = RECIPES[1];
+      store.loadById(selected.id);
+      expect(store.currentServings()).toBe(selected.servings);
+
+      store.update({ ...other, servings: other.servings + 5 });
+      expect(store.currentServings()).toBe(selected.servings);
+    });
   });
 
   describe('remove', () => {
