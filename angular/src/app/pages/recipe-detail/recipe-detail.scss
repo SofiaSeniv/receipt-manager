@@ -110,6 +110,45 @@
     color: $ink;
 }
 
+.detail-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 8px 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-edit {
+    background: transparent;
+    border: 0.5px solid $border;
+    color: $muted;
+
+    &:hover {
+        color: $ink;
+        border-color: $ink;
+    }
+}
+
+.btn-delete {
+    background: transparent;
+    border: 0.5px solid rgba(#b3261e, 0.4);
+    color: #b3261e;
+
+    &:hover {
+        background: #b3261e;
+        color: $cream;
+    }
+}
+
 .detail-body {
     display: grid;
     grid-template-columns: 1fr 1fr;

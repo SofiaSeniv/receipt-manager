@@ -12,7 +12,13 @@
         </button>
         }
     </div>
+
+    <button type="button" class="new-recipe-btn" (click)="openCreateForm()">+ Новий рецепт</button>
 </search>
+
+@if (formVisible()) {
+<app-recipe-form (closed)="closeForm()" />
+}
 
 <section class="recipe-grid">
     @for (recipe of store.filteredRecipes(); track recipe.id) {

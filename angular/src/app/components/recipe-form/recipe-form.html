@@ -1,0 +1,74 @@
+<form class="recipe-form" (ngSubmit)="submit()">
+    <h2>{{ isEdit() ? 'Редагувати рецепт' : 'Новий рецепт' }}</h2>
+
+    <label class="field">
+        <span>Назва</span>
+        <input type="text" [value]="draft().title" (input)="onTitleInput($event)" required>
+    </label>
+
+    <label class="field">
+        <span>Фото (шлях)</span>
+        <input type="text" [value]="draft().photoPath" (input)="onPhotoPathInput($event)">
+    </label>
+
+    <label class="field">
+        <span>Категорія</span>
+        <select [value]="draft().categoryName" (change)="onCategoryChange($event)">
+            @for (opt of categoryOptions; track opt.key) {
+            <option [value]="opt.key">{{ opt.label }}</option>
+            }
+        </select>
+    </label>
+
+    <label class="field">
+        <span>Час приготування</span>
+        <input type="text" [value]="draft().cookTime" (input)="onCookTimeInput($event)">
+    </label>
+
+    <label class="field">
+        <span>Порції</span>
+        <input type="number" min="1" [value]="draft().servings" (input)="onServingsInput($event)">
+    </label>
+
+    <label class="field">
+        <span>Техніки (через кому)</span>
+        <input type="text" [value]="draft().techniques.join(', ')" (input)="onTechniquesInput($event)">
+    </label>
+
+    <fieldset class="rows">
+        <legend>Інгредієнти</legend>
+        @for (ing of draft().ingredients; track $index) {
+        <div class="row">
+            <input type="text" placeholder="Назва" [value]="ing.name" (input)="onIngredientNameInput($index, $event)">
+            <input type="number" placeholder="К-сть" [value]="ing.amount" (input)="onIngredientAmountInput($index, $event)">
+            <input type="text" placeholder="Од." [value]="ing.unit" (input)="onIngredientUnitInput($index, $event)">
+            <button type="button" class="remove-btn" (click)="removeIngredient($index)" aria-label="Видалити інгредієнт">✕</button>
+        </div>
+        }
+        <button type="button" class="add-btn" (click)="addIngredient()">+ Інгредієнт</button>
+    </fieldset>
+
+    <fieldset class="rows">
+        <legend>Кроки</legend>
+        @for (step of draft().steps; track $index) {
+        <div class="row">
+            <input type="text" placeholder="Техніка" [value]="step.technique" (input)="onStepTechniqueInput($index, $event)">
+            <input type="text" placeholder="Опис" [value]="step.text" (input)="onStepTextInput($index, $event)">
+            <input type="text" placeholder="Час" [value]="step.time" (input)="onStepTimeInput($index, $event)">
+            <button type="button" class="remove-btn" (click)="removeStep($index)" aria-label="Видалити крок">✕</button>
+        </div>
+        }
+        <button type="button" class="add-btn" (click)="addStep()">+ Крок</button>
+    </fieldset>
+
+    @if (store.createError() || store.updateError()) {
+    <p class="form-error">{{ store.createError() || store.updateError() }}</p>
+    }
+
+    <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="saving()">
+            {{ saving() ? 'Збереження...' : 'Зберегти' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="cancel()">Скасувати</button>
+    </div>
+</form>

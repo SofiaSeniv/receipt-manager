@@ -2,7 +2,7 @@ import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY, pipe } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, exhaustMap, switchMap, tap } from 'rxjs/operators';
 import { CategoryName, Recipe } from '../models/recipe.model';
 import { RecipeService } from '../services/recipe';
 
@@ -20,6 +20,13 @@ export interface RecipeState {
   categoryFilter: CategoryName | 'all';
 
   currentServings: number | null;
+
+  creating: boolean;
+  createError: string | null;
+  updating: boolean;
+  updateError: string | null;
+  deletingId: number | null;
+  deleteError: string | null;
 }
 
 const initialState: RecipeState = {
@@ -36,6 +43,13 @@ const initialState: RecipeState = {
   categoryFilter: 'all',
 
   currentServings: null,
+
+  creating: false,
+  createError: null,
+  updating: false,
+  updateError: null,
+  deletingId: null,
+  deleteError: null,
 };
 
 export const RecipeStore = signalStore(
@@ -109,6 +123,66 @@ export const RecipeStore = signalStore(
         debounceTime(250),
         distinctUntilChanged(),
         tap((query) => patchState(store, { debouncedQuery: query }))
+      )
+    ),
+
+    create: rxMethod<Omit<Recipe, 'id'>>(
+      pipe(
+        tap(() => patchState(store, { creating: true, createError: null })),
+        exhaustMap((draft) =>
+          recipeService.create(draft).pipe(
+            tap((created) =>
+              patchState(store, {
+                recipes: [...store.recipes(), created],
+                creating: false,
+              })
+            ),
+            catchError(() => {
+              patchState(store, { creating: false, createError: 'Не вдалося створити рецепт' });
+              return EMPTY;
+            })
+          )
+        )
+      )
+    ),
+
+    update: rxMethod<Recipe>(
+      pipe(
+        tap(() => patchState(store, { updating: true, updateError: null })),
+        exhaustMap((recipe) =>
+          recipeService.update(recipe).pipe(
+            tap((updated) =>
+              patchState(store, {
+                recipes: store.recipes().map((r) => (r.id === updated.id ? updated : r)),
+                updating: false,
+              })
+            ),
+            catchError(() => {
+              patchState(store, { updating: false, updateError: 'Не вдалося оновити рецепт' });
+              return EMPTY;
+            })
+          )
+        )
+      )
+    ),
+
+    remove: rxMethod<number>(
+      pipe(
+        tap((id) => patchState(store, { deletingId: id, deleteError: null })),
+        exhaustMap((id) =>
+          recipeService.delete(id).pipe(
+            tap(() =>
+              patchState(store, {
+                recipes: store.recipes().filter((r) => r.id !== id),
+                deletingId: null,
+              })
+            ),
+            catchError(() => {
+              patchState(store, { deletingId: null, deleteError: 'Не вдалося видалити рецепт' });
+              return EMPTY;
+            })
+          )
+        )
       )
     ),
 

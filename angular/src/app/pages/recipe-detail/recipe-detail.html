@@ -30,8 +30,17 @@
             <span class="servings-num" aria-live="polite">{{ store.currentServings() }}</span>
             <button class="btn-scaler" (click)="store.incrementServings()" aria-label="Збільшити кількість порцій">+</button>
         </div>
+
+        <div class="detail-actions">
+            <button type="button" class="btn-edit" (click)="openEditForm()">Редагувати</button>
+            <button type="button" class="btn-delete" (click)="deleteRecipe(recipe.id)">Видалити</button>
+        </div>
     </div>
 </section>
+
+@if (formVisible()) {
+<app-recipe-form [recipe]="recipe" (closed)="closeForm()" />
+}
 
 <section class="detail-body">
     <div class="ingredients-section">
