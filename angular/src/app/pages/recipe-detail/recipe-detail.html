@@ -1,10 +1,10 @@
-@if (loading()) {
+@if (store.detailLoading()) {
 <p class="detail-loading">Завантаження...</p>
 }
-@if (!loading() && !recipe()) {
+@if (!store.detailLoading() && !store.selectedRecipe()) {
 <app-not-found />
 }
-@if (recipe(); as recipe) {
+@if (store.selectedRecipe(); as recipe) {
 <section class="detail-hero">
     <div class="detail-hero-img">
         <img [src]="recipe.photoPath" [alt]="recipe.title">
@@ -20,15 +20,15 @@
             </div>
             <div class="stat">
                 <dt class="stat-label">Порції</dt>
-                <dd class="stat-value">{{ currentServings() }}</dd>
+                <dd class="stat-value">{{ store.currentServings() }}</dd>
             </div>
         </dl>
 
         <div class="scaler" role="group" aria-label="Кількість порцій">
             <span>Порції</span>
-            <button class="btn-scaler" (click)="decrement()" aria-label="Зменшити кількість порцій">−</button>
-            <span class="servings-num" aria-live="polite">{{ currentServings() }}</span>
-            <button class="btn-scaler" (click)="increment()" aria-label="Збільшити кількість порцій">+</button>
+            <button class="btn-scaler" (click)="store.decrementServings()" aria-label="Зменшити кількість порцій">−</button>
+            <span class="servings-num" aria-live="polite">{{ store.currentServings() }}</span>
+            <button class="btn-scaler" (click)="store.incrementServings()" aria-label="Збільшити кількість порцій">+</button>
         </div>
     </div>
 </section>
@@ -37,7 +37,7 @@
     <div class="ingredients-section">
         <h2>Інгредієнти</h2>
         <ul class="ingredients-list">
-            @for (ing of scaledIngredients(); track ing.name) {
+            @for (ing of store.scaledIngredients(); track ing.name) {
             <li class="ingredient-item">
                 <span class="ingredient-name">{{ ing.name }}</span>
                 <span class="ingredient-amount">{{ ing.amount }} {{ ing.unit }}</span>
